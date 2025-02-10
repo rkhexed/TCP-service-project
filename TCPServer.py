@@ -6,12 +6,9 @@ from typing import Dict
 from threading import Lock  # Import threading lock
 
 class TCPServer:
-    """
-    A simple multi-client TCP server that handles requests, stores client data,
-    and allows file sharing.
-    """
+    #A simple multi-client TCP that handles messages, statuses and downloading server files
     def __init__(self):
-        """Initialize server configurations and client handling structures."""
+        #star server and client handling.
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = 'localhost'
         self.port = 12345
@@ -19,14 +16,14 @@ class TCPServer:
         self.clients = [0, 0, 0]  # Keeps track of active client slots
         self.client_cache: Dict[str, dict] = {}  # Stores client session data
         self.files_directory = "server_files"  # Directory containing server files
-        self.lock = Lock()  # Ensures thread safety for shared resources
+        self.lock = Lock()
         
         # Create the files directory if it doesn't exist
         if not os.path.exists(self.files_directory):
             os.makedirs(self.files_directory)
     
     def start_server(self):
-        """Start the server and listen for incoming client connections."""
+        #Start the server and listen for incoming client connections.
         self.server_socket.bind((self.host, self.port))
         self.server_socket.listen(self.max_clients)
         print(f"Server is listening on {self.host}:{self.port}")

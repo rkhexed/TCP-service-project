@@ -21,7 +21,7 @@ class TCPClient:
             os.makedirs(self.downloads_folder)
 
     def start_client(self):
-        """Attempt to connect to the server and initiate communication."""
+        #Attempt to connect to the server and initiate communication.
         try:
             self.client_socket.connect((self.host, self.port))
             
@@ -47,7 +47,7 @@ class TCPClient:
             self.client_socket.close()
 
     def send_client_name(self):
-        """Receive client number from the server and send back a unique client name."""
+        #Receive client number from the server and send back a unique client name.
         data = self.client_socket.recv(1024).decode()
 
         if "Server is full" in data:
@@ -60,7 +60,7 @@ class TCPClient:
         print("Client name: " + self.client_name)
 
     def print_help(self):
-        """Print available commands for the user."""
+        #Print available commands for the user.
         print("\nAvailable commands:")
         print("- status: Get server cache information")
         print("- list: Get list of available files")
@@ -69,7 +69,7 @@ class TCPClient:
         print("- Any other message will be echoed back with ACK\n")
 
     def send_messages(self):
-        """Send user input to the server until 'exit' is entered."""
+        #Send user input to the server until 'exit' is entered.
         while True:
             try:
                 if self.locked:
@@ -93,7 +93,7 @@ class TCPClient:
                 break
 
     def receive_messages(self):
-        """Continuously receive messages from the server."""
+        #Continuously receive messages from the server.
         while True:
             try:
                 data = self.client_socket.recv(1024).decode()
@@ -114,7 +114,7 @@ class TCPClient:
                 self.locked = False
             
     def receive_file(self, filename: str):
-        """Receive a file from the server and save it to the downloads folder."""
+        #Receive a file from the server and save it to the downloads folder.
         try:
             file_path = os.path.join(self.downloads_folder, filename)
             self.client_socket.send(b"Ready")  # Signal readiness to receive
